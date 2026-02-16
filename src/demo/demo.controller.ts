@@ -12,7 +12,7 @@ export class DemoController {
         return this.demoService.getDemo();
     }
 
-    @Throttle({ default: { limit: 1, ttl: seconds(10) } }) // Override the throttling for this route, 1 request per 10 seconds
+    @Throttle({ my: { limit: 1, ttl: seconds(10) } }) // Override the throttling for this route, 1 request per 10 seconds
     @Get('big')
     getBigDemo() {
         return this.demoService.getBigDemo();

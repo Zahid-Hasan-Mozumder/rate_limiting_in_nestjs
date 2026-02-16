@@ -8,6 +8,7 @@ import { DemoModule } from './demo/demo.module';
     ThrottlerModule.forRoot({
       throttlers: [
         {
+          name: 'my',
           ttl: seconds(60), // 1 minute
           limit: 10, // 10 requests
           blockDuration: seconds(10), // 10 seconds: After 10 requests, the user will be blocked for 10 seconds. If no provided then ttl is used as block duration.
