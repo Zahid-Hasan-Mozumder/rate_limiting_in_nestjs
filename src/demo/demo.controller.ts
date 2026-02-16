@@ -12,7 +12,6 @@ export class DemoController {
         return this.demoService.getDemo();
     }
 
-    @SkipThrottle({ short: true, medium: true })
     @Get('big')
     getBigDemo() {
         return this.demoService.getBigDemo();

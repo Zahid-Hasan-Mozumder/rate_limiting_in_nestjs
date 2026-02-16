@@ -2,28 +2,19 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { seconds, ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { DemoModule } from './demo/demo.module';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 
 @Module({
   imports: [
     ThrottlerModule.forRoot({
       throttlers: [
         {
-          name: 'short',
-          ttl: seconds(10), // 10 seconds
+          ttl: seconds(60), // 60 seconds
           limit: 3, // 3 requests
-        },
-        {
-          name: 'medium',
-          ttl: seconds(30), // 30 seconds
-          limit: 5, // 5 requests
-        },
-        {
-          name: 'long',
-          ttl: seconds(60), // 1 minute
-          limit: 10, // 10 requests
         },
       ],
       errorMessage: 'WOW Man! Slow down. You are making too many requests. Please try again later',
+      storage: new ThrottlerStorageRedisService({}), // Using Redis for throttling
     }),
     DemoModule,
   ],
