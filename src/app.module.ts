@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ExecutionContext, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { seconds, ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { DemoModule } from './demo/demo.module';
@@ -13,8 +13,15 @@ import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
           limit: 3, // 3 requests
         },
       ],
+      
       errorMessage: 'WOW Man! Slow down. You are making too many requests. Please try again later',
+      
       storage: new ThrottlerStorageRedisService({}), // Using Redis for throttling
+      
+      getTracker: (req: Record<string, any>, context: ExecutionContext) => {
+        // return req.ip; // By default, using the IP address as the tracker
+        return req.headers['x-tenant-id']; // Using the tenant ID as the tracker
+      }, 
     }),
     DemoModule,
   ],
