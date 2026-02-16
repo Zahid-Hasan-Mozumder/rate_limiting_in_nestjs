@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { DemoService } from './demo.service';
-import { SkipThrottle } from '@nestjs/throttler';
+import { seconds, SkipThrottle, Throttle } from '@nestjs/throttler';
 
 @Controller('demo')
 export class DemoController {
@@ -12,7 +12,7 @@ export class DemoController {
         return this.demoService.getDemo();
     }
 
-    @SkipThrottle() // This route will be skipped by the throttler
+    @Throttle({ default: { limit: 1, ttl: seconds(10) } }) // Override the throttling for this route, 1 request per 10 seconds
     @Get('big')
     getBigDemo() {
         return this.demoService.getBigDemo();
