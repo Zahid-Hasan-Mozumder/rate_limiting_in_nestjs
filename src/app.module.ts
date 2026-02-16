@@ -10,6 +10,7 @@ import { DemoModule } from './demo/demo.module';
         {
           ttl: 60 * 1000, // 1 minute
           limit: 10, // 10 requests
+          blockDuration: 10 * 1000, // 10 seconds: After 10 requests, the user will be blocked for 10 seconds. If no provided then ttl is used as block duration.
         },
       ]
     }),
