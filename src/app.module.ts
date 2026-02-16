@@ -8,10 +8,19 @@ import { DemoModule } from './demo/demo.module';
     ThrottlerModule.forRoot({
       throttlers: [
         {
-          name: 'my',
+          name: 'short',
+          ttl: seconds(10), // 10 seconds
+          limit: 3, // 3 requests
+        },
+        {
+          name: 'medium',
+          ttl: seconds(30), // 30 seconds
+          limit: 5, // 5 requests
+        },
+        {
+          name: 'long',
           ttl: seconds(60), // 1 minute
           limit: 10, // 10 requests
-          blockDuration: seconds(10), // 10 seconds: After 10 requests, the user will be blocked for 10 seconds. If no provided then ttl is used as block duration.
         },
       ],
       errorMessage: 'WOW Man! Slow down. You are making too many requests. Please try again later',
