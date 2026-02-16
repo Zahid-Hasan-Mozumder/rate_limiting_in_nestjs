@@ -21,7 +21,13 @@ import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
       getTracker: (req: Record<string, any>, context: ExecutionContext) => {
         // return req.ip; // By default, using the IP address as the tracker
         return req.headers['x-tenant-id']; // Using the tenant ID as the tracker
-      }, 
+      },
+
+      // Define redis key for the request
+      // By default, the key is generated based on the info returned by getTracker and the throttler name
+      generateKey: (context: ExecutionContext, trackerString: string, throttlerName: string) => {
+        return trackerString;
+      },
     }),
     DemoModule,
   ],
